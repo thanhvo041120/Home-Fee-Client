@@ -1,6 +1,10 @@
-:root{
-  --text-primary: 
+:root {
+  --color-primary: #d05a00;
+  --color-primary-opacity-1: #d05a00c2;
+  --color-secondary: #ffffff;
+  --color-black: #22231D
 }
+
 .App {
   text-align: center;
 }
