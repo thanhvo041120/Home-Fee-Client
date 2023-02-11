@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { LoginFormComponent } from "../../components/forms";
+import { AlertDialogComponent } from "../../components/dialog";
+import {
+  LoginFormComponent,
+  RegisterFormComponent,
+} from "../../components/forms";
+import { useAppSelector } from "../../redux/store";
 import "./style.css";
 
 const AuthPage = () => {
@@ -25,6 +29,9 @@ const AuthPage = () => {
     },
   ];
   const [selected, setSelected] = useState(1);
+
+  const notification = useAppSelector((state) => state.notify);
+
   const onSetOption = (e) => {
     const selectedId = e.target.getAttribute("item-id");
     if (selectedId === selected) {
@@ -34,10 +41,31 @@ const AuthPage = () => {
     setSelected(parseInt(selectedId));
   };
 
-  useEffect(() => {}, [selected]);
+  const RenderForm = () => {
+    switch (selected) {
+      case 1:
+        return <LoginFormComponent />;
+      case 2:
+        return <RegisterFormComponent />;
+
+      default:
+        break;
+    }
+  };
+
+  const RenderNotification = () => {
+    return (
+      <AlertDialogComponent
+        context={notification.message}
+        alertColor={notification.type.toLowerCase()}
+        title={notification.type}
+      />
+    );
+  };
 
   return (
     <React.Fragment>
+      {notification.hasNotify && <RenderNotification />}
       <div className="auth-page-container">
         <div className="auth-page-title">
           <p className="auth-page-title-black">Authent</p>
@@ -78,7 +106,7 @@ const AuthPage = () => {
               })}
             </div>
             <div className="auth-form-content">
-              <LoginFormComponent />
+              <RenderForm />
             </div>
           </div>
         </div>

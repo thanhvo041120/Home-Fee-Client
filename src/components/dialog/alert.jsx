@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { clear } from "../../redux/slices/notify.slice";
+import { useAppDispatch } from "../../redux/store";
+import Logo from "./logo";
 import "./style.css";
-const Alert = ({ isOpen, context, handleClose, alertColor, title }) => {
+const Alert = ({ context, alertColor, title }) => {
+  const dispatch = useAppDispatch();
   const [color, setColor] = useState("#ff3333");
   const changeColor = () => {
     if (alertColor === "error") {
@@ -21,15 +25,26 @@ const Alert = ({ isOpen, context, handleClose, alertColor, title }) => {
     }
   };
 
+  const handleClose = () => {
+    dispatch(clear());
+  };
+
+  useEffect(() => {
+    changeColor();
+  }, [alertColor]);
   return (
-    <div class="popup" id="notifyUpdate">
-      <div class="popup-panel">
-        <div class="popup-logo-success"></div>
-        <p class="popup-status-success">Success!</p>
-        <p class="popup-message">Your changes have been successfully saved!</p>
-        <div class="submit-area">
-          <button class="submit-btn" id="confirmButton">
-            OK
+    <div className="popup">
+      <div className="popup-panel">
+        <div>
+          <Logo type={alertColor} color={color} />
+        </div>
+        <p className="popup-status" style={{ color: color }}>
+          {title}
+        </p>
+        <p className="popup-message">{context}</p>
+        <div>
+          <button className="status-button" onClick={handleClose} style={{ backgroundColor: color }}>
+            Close
           </button>
         </div>
       </div>

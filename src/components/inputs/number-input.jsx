@@ -1,7 +1,6 @@
 import React from "react";
-import "./style.css";
 
-const TextInput = ({
+const NumberInput = ({
   id,
   placeholder,
   type,
@@ -28,4 +27,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default NumberInput;

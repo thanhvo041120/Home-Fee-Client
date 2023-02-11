@@ -4,21 +4,25 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { MdAlternateEmail } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "./style.css";
-import { decodeAccessToken, validateEmail } from "../../utils/helper/helpers";
+import {
+  decodeAccessToken,
+  validateEmail,
+  validatePassword,
+} from "../../utils/helper/helpers";
 import { AuthApi } from "../../api/auth";
 import { useAppDispatch } from "../../redux/store";
 import { login } from "../../redux/slices/user.slice";
+import { setNotify } from "../../redux/slices/notify.slice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [viewPassword, setViewPassword] = useState(false);
   const [loginInput, setLoginInput] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
-
-
 
   const onSetViewPassword = () => {
     setViewPassword((prev) => !prev);
@@ -38,13 +42,31 @@ const Login = () => {
           password: value,
         }));
         break;
+      default:
+        break;
     }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(loginInput.email)) {
-      setError("Email is invalid");
+      dispatch(
+        setNotify({
+          type: "Error",
+          message: "Email is invalid",
+          hasNotify: true,
+        })
+      );
+      return;
+    }
+    if (!validatePassword(loginInput.password)) {
+      dispatch(
+        setNotify({
+          type: "Error",
+          message: "Password is invalid",
+          hasNotify: true,
+        })
+      );
       return;
     }
     const auth = new AuthApi();
@@ -60,12 +82,20 @@ const Login = () => {
           isLogin: true,
         })
       );
+      navigate("/home");
+    }
+
+    if (response.status === 400) {
+      dispatch(
+        setNotify({
+          type: "Error",
+          message: response.message,
+          hasNotify: true,
+        })
+      );
     }
   };
 
-
-
-  
   useEffect(() => {
     const listenEnterEvent = (e) => {
       if (e.code === "Enter" || e.code === "NumpadEnter") {

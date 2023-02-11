@@ -10,4 +10,15 @@ export class AuthApi {
       return error.message;
     }
   }
+  
+  async register(data){
+    try {
+      const URL = "/auth/register";
+      const response = await rootInstance.post(URL, data);
+      return response.data;
+    } catch (error) {
+      return error.message
+    }
+  }
 }
+
