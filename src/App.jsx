@@ -1,16 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthPage from "./pages/common/AuthPage";
-import TestPage from "./pages/common/TestPage";
-import ProtectRoute from "./routes/protected.route";
+import UserHomePage from "./pages/user/UserHomePage";
+import PrivateRoute from "./routes/private.route";
+import ProtectedRoute from "./routes/protected.route";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<TestPage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/user" element={<ProtectedRoute />}>
+            <Route path="/user/home" element={<UserHomePage />} />
+          </Route>
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/authentication" element={<AuthPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
