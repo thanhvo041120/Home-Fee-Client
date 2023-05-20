@@ -1,0 +1,44 @@
+.app-logo{
+    font-size: 50px;
+    color: var(--color-primary-opacity-1);
+}
+.header-container {
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-secondary);
+}
+.header-row{
+    width: 100%;
+    display: flex;
+    align-self: center;
+    padding: 10px 0px;
+}
+.header-logo{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+.header-app-name{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+
+}
+.header-app-name-text{
+    font-weight: bold;
+    font-size: 30px;
+    font-family: var(--app-font);
+    letter-spacing: 10px;
+    width: 100%;
+}
+.header-navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 10;
+}
+

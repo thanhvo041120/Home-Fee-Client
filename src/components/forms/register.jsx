@@ -6,8 +6,8 @@ import {
   AiOutlinePhone,
 } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
+import { FaBirthdayCake } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { AuthApi } from "../../api/auth";
 import { setNotify } from "../../redux/slices/notify.slice";
 import { useAppDispatch } from "../../redux/store";
 import {
@@ -15,9 +15,10 @@ import {
   validatePassword,
   validatePhonenumber,
 } from "../../utils/helper/helpers";
-import { TextInputComponent } from "../inputs";
-import "./register.style.css";
-import "./style.css";
+import { DateInputComponent, TextInputComponent } from "../inputs";
+import "./css/register.style.css";
+import "./css/style.css";
+import { UserApi } from "../../api";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ const Register = () => {
     password: "",
     fullname: "",
     phonenumber: "",
+    birthday: new Date().toLocaleDateString("en-029", "MM/dd/yyyy"),
   });
   const [viewPassword, setViewPassword] = useState(false);
 
@@ -58,6 +60,12 @@ const Register = () => {
         setRegisterInput((prev) => ({
           ...prev,
           phonenumber: value,
+        }));
+        break;
+      case "birthday":
+        setRegisterInput((prev) => ({
+          ...prev,
+          birthday: value,
         }));
         break;
       default:
@@ -99,18 +107,19 @@ const Register = () => {
       );
       return;
     }
-    const auth = new AuthApi();
-    const response = await auth.register(registerInput);
-    if (response.status === 400) {
+    const user = new UserApi();
+    const response = await user.register(registerInput);
+    const errorsArray = [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 500];
+    if (errorsArray.includes(response.status)) {
       dispatch(
         setNotify({
           type: "Error",
-          message: response.message,
+          message: response.data.reason,
           hasNotify: true,
         })
       );
     }
-    if(response.status === 201 ){
+    if (response.status === 201) {
       dispatch(
         setNotify({
           type: "Success",
@@ -197,6 +206,18 @@ const Register = () => {
         </div>
       </div>
 
+      <div className="register-form-row">
+        <FaBirthdayCake className="register-icon" />
+        <div className="register-box">
+          <DateInputComponent
+            id={"birthday"}
+            isRequire={true}
+            onChangeInput={onChangeInput}
+            typeDateFormat={"dd/MM/yyyy"}
+            typeClass={"form-input-box-none-border form-input-box"}
+          />
+        </div>
+      </div>
       <div className="register-form-row">
         <button className="login-form-button" onClick={onSubmit}>
           Register

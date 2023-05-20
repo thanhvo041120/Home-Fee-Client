@@ -3,7 +3,7 @@ import { TextInputComponent } from "../inputs";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdAlternateEmail } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import "./style.css";
+import "./css/style.css";
 import {
   decodeAccessToken,
   validateEmail,
@@ -71,10 +71,10 @@ const Login = () => {
     }
     const auth = new AuthApi();
     const response = await auth.login(loginInput);
-    if (response.status === 201) {
-      localStorage.setItem("access_token", response.accessToken);
-      localStorage.setItem("refresh_token", response.refreshToken);
-      const decodedData = decodeAccessToken(response.accessToken);
+    if (response.status === 200) {
+      localStorage.setItem("access_token", response.data.accessToken);
+      localStorage.setItem("refresh_token", response.data.refreshToken);
+      const decodedData = decodeAccessToken(response.data.accessToken);
       dispatch(
         login({
           email: decodedData.email,
@@ -85,7 +85,7 @@ const Login = () => {
       navigate("/home");
     }
 
-    if (response.status === 400) {
+    if (response.status === 400 || response.status === 401) {
       dispatch(
         setNotify({
           type: "Error",

@@ -19,7 +19,7 @@ const ProtectedRoute = () => {
   //   }
   // }
 
-  return <Navigate to="/auth/authentication" />;
+  return <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

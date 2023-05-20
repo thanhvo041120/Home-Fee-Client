@@ -1,8 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 :root {
   --color-primary: #d05a00;
   --color-primary-opacity-1: #d05a00c2;
   --color-secondary: #ffffff;
-  --color-black: #22231D
+  --color-black: #22231d;
+  --color-black-opacity: hsla(70, 9%, 13%, 0.295);
+  --app-font: 'Playfair Display', serif;
 }
 
 .App {

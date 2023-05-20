@@ -14,7 +14,7 @@ function App() {
             <Route path="/user/home" element={<UserHomePage />} />
           </Route>
           <Route path="/" element={<PrivateRoute />}>
-            <Route path="/authentication" element={<AuthPage />} />
+            <Route path="/" element={<AuthPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

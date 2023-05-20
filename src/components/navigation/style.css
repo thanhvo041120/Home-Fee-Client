@@ -1,0 +1,32 @@
+.nav-bar-conatiner {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.nav-bar-row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.navigation-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 35%;
+}
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-grow: 4;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.option-text {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+}
